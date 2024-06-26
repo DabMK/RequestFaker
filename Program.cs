@@ -26,10 +26,10 @@ namespace RequestFaker
             {
                 Initialize();
                 Console.Clear();
-                Console.WriteLine("------------------------");
-                Console.WriteLine("REQUESTFAKER");
+                Console.WriteLine("---------------------------------------------------------");
+                Console.WriteLine("REQUESTFAKER:\n");
                 Console.WriteLine("Usage: RequestFaker <URI> <method> <headersNumberWithoutCookies> <body> <cookiesNumber> <version> <versionPolicy> <useProxy> <allowRedirects> <SSLVerification> <SSLProtocol> <decompressionMethod>");
-                Console.WriteLine("------------------------\n");
+                Console.WriteLine("---------------------------------------------------------\n\n");
 
                 // URI
                 if (args.Length > 0)
@@ -128,11 +128,11 @@ namespace RequestFaker
                 if (args.Length > 5)
                 {
                     sVersion = args[5];
-                    Console.WriteLine($"\nVersion: {sVersion}");
+                    Console.WriteLine($"\nVersion (Default is 1.1): {sVersion}");
                 }
                 else
                 {
-                    Console.Write("\nVersion: ");
+                    Console.Write("\nVersion (Default is 1.1): ");
                     sVersion = Console.ReadLine();
                 }
                 if (!string.IsNullOrWhiteSpace(sVersion) && !sVersion.StartsWith("0"))
@@ -271,7 +271,7 @@ namespace RequestFaker
                 }
                 else
                 {
-                    Console.Write("\nSSL Protocol: ");
+                    Console.Write("\nSSL Protocol (Default is System Automatic): ");
                     SSLp = Console.ReadLine();
                 }
                 if (!string.IsNullOrWhiteSpace(SSLp))
@@ -358,7 +358,7 @@ namespace RequestFaker
                     Console.WriteLine("RESPONSE:\n-----------------------------\n");
                     Console.WriteLine("Status Code: " + response.StatusCode);
                     if (!string.IsNullOrWhiteSpace(response.ReasonPhrase)) { Console.WriteLine("Reason Phrase: " + response.ReasonPhrase); }
-                    Console.WriteLine($"Protocol Version: {protocol} -> {response.Version}");
+                    Console.WriteLine($"Protocol Version (Request -> Response): {protocol} -> {response.Version}");
                     Console.WriteLine("Headers:");
                     for (int i = 0; i < heads.Count; i++)
                     {

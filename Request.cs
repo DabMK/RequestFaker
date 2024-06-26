@@ -106,8 +106,10 @@ namespace RequestFaker
                 if (!ssl) { handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator; }
                 if (SSLProtocol != null) { handler.SslProtocols = (SslProtocols)SSLProtocol; }
 
-                // FINAL SETTINGS
+                // ALLOW REDIRECTS
                 handler.AllowAutoRedirect = autoRedirects;
+
+                // DECOMPRESSION METHOD
                 if (decompression != null) { handler.AutomaticDecompression = (DecompressionMethods)decompression; }
 
                 // SEND
