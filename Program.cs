@@ -27,17 +27,47 @@ namespace RequestFaker
                 Initialize();
                 Console.Clear();
                 Console.WriteLine("------------------------");
-                Console.WriteLine("RequestFaker");
+                Console.WriteLine("REQUESTFAKER");
+                Console.WriteLine("Usage: RequestFaker <URI> <method> <headersNumberWithoutCookies> <body> <cookiesNumber> <version> <versionPolicy> <useProxy> <allowRedirects> <SSLVerification> <SSLProtocol> <decompressionMethod>");
                 Console.WriteLine("------------------------\n");
 
-                Console.Write("\nURI: ");
-                URI = Console.ReadLine();
+                // URI
+                if (args.Length > 0)
+                {
+                    URI = args[0];
+                    Console.WriteLine($"\nURI: {URI}");
+                }
+                else
+                {
+                    Console.Write("\nURI: ");
+                    URI = Console.ReadLine();
+                }
 
-                Console.Write("\nMethod: ");
-                method = Console.ReadLine();
+                // METHOD
+                if (args.Length > 1)
+                {
+                    method = args[1];
+                    Console.WriteLine($"\nMethod: {method}");
+                }
+                else
+                {
+                    Console.Write("\nMethod: ");
+                    method = Console.ReadLine();
+                }
 
-                Console.Write("\nHeaders Number (Without cookies): ");
-                if (int.TryParse(Console.ReadLine(), out int hNum) && hNum >= 1)
+                // HEADERS
+                string? headersNumber;
+                if (args.Length > 2)
+                {
+                    headersNumber = args[2];
+                    Console.WriteLine($"\nHeaders Number (Without Cookies): {headersNumber}");
+                }
+                else
+                {
+                    Console.Write("\nHeaders Number (Without Cookies): ");
+                    headersNumber = Console.ReadLine();
+                }
+                if (int.TryParse(headersNumber, out int hNum) && hNum >= 1)
                 {
                     headers = new(hNum);
                     for (int i = 0; i < hNum; i++)
@@ -53,11 +83,31 @@ namespace RequestFaker
                     if (!ok) { continue; }
                 }
 
-                Console.Write("\nBody: ");
-                body = Console.ReadLine();
+                // BODY
+                if (args.Length > 3)
+                {
+                    body = args[3];
+                    Console.WriteLine($"\nBody: {body}");
+                }
+                else
+                {
+                    Console.Write("\nBody: ");
+                    body = Console.ReadLine();
+                }
 
-                Console.Write("\nCookies Number: ");
-                if (int.TryParse(Console.ReadLine(), out int cNum) && cNum >= 1)
+                // COOKIES
+                string? cookiesNumber;
+                if (args.Length > 4)
+                {
+                    cookiesNumber = args[4];
+                    Console.WriteLine($"\nCookies Number: {cookiesNumber}");
+                }
+                else
+                {
+                    Console.Write("\nCookies Number: ");
+                    cookiesNumber = Console.ReadLine();
+                }
+                if (int.TryParse(cookiesNumber, out int cNum) && cNum >= 1)
                 {
                     cookies = new(cNum);
                     for (int i = 0; i < cNum; i++)
@@ -73,8 +123,18 @@ namespace RequestFaker
                     if (!ok) { continue; }
                 }
 
-                Console.Write("\nVersion: ");
-                string? sVersion = Console.ReadLine();
+                // VERSION
+                string? sVersion;
+                if (args.Length > 5)
+                {
+                    sVersion = args[5];
+                    Console.WriteLine($"\nVersion: {sVersion}");
+                }
+                else
+                {
+                    Console.Write("\nVersion: ");
+                    sVersion = Console.ReadLine();
+                }
                 if (!string.IsNullOrWhiteSpace(sVersion) && !sVersion.StartsWith("0"))
                 {
                     if (sVersion == "1" || sVersion == "1.0" || sVersion == "10" || sVersion == "v10" || sVersion == "v1.0" || sVersion == "v1")
@@ -103,8 +163,18 @@ namespace RequestFaker
                     }
                 }
 
-                Console.Write("\nVersion Policy: ");
-                string? pVersion = Console.ReadLine();
+                // VERSION POLICY
+                string? pVersion;
+                if (args.Length > 6)
+                {
+                    pVersion = args[6];
+                    Console.WriteLine($"\nVersion Policy: {pVersion}");
+                }
+                else
+                {
+                    Console.Write("\nVersion Policy: ");
+                    pVersion = Console.ReadLine();
+                }
                 if (!string.IsNullOrWhiteSpace(pVersion))
                 {
                     if (pVersion.Equals("RequestVersionExact", StringComparison.OrdinalIgnoreCase) || pVersion.Equals("Exact", StringComparison.OrdinalIgnoreCase))
@@ -121,8 +191,18 @@ namespace RequestFaker
                     }
                 }
 
-                Console.Write("\nUse Proxy (Default is No)? ");
-                string? proxyConfS = Console.ReadLine();
+                // PROXY
+                string? proxyConfS;
+                if (args.Length > 7)
+                {
+                    proxyConfS = args[7];
+                    Console.WriteLine($"\nUse Proxy (yes/no) (Default is No)? {proxyConfS}");
+                }
+                else
+                {
+                    Console.Write("\nUse Proxy (yes/no) (Default is No)? ");
+                    proxyConfS = Console.ReadLine();
+                }
                 if (!string.IsNullOrWhiteSpace(proxyConfS) && (proxyConfS.Equals("y", StringComparison.OrdinalIgnoreCase) || proxyConfS.Equals("yes", StringComparison.OrdinalIgnoreCase) || proxyConfS.Equals("true", StringComparison.OrdinalIgnoreCase)))
                 {
                     proxy = new string[3];
@@ -148,22 +228,52 @@ namespace RequestFaker
                     }
                 }
 
-                Console.Write("\nAllow AutoRedirects (Default is True)? ");
-                string? redirectConfS = Console.ReadLine();
+                // REDIRECTS
+                string? redirectConfS;
+                if (args.Length > 8)
+                {
+                    redirectConfS = args[8];
+                    Console.WriteLine($"\nAllow AutoRedirects (Default is True)?: {redirectConfS}");
+                }
+                else
+                {
+                    Console.Write("\nAllow AutoRedirects (Default is True)? ");
+                    redirectConfS = Console.ReadLine();
+                }
                 if (!string.IsNullOrWhiteSpace(redirectConfS) && (redirectConfS.Equals("n", StringComparison.OrdinalIgnoreCase) || redirectConfS.Equals("no", StringComparison.OrdinalIgnoreCase) || redirectConfS.Equals("false", StringComparison.OrdinalIgnoreCase)))
                 {
                     autoRedirects = false;
                 }
 
-                Console.Write("\nUse SSL Verification (Default is False)? ");
-                string? SSLConfS = Console.ReadLine();
+                // SSL VERIFICATION
+                string? SSLConfS;
+                if (args.Length > 9)
+                {
+                    SSLConfS = args[9];
+                    Console.WriteLine($"\nUse SSL Verification (Default is False)? {SSLConfS}");
+                }
+                else
+                {
+                    Console.Write("\nUse SSL Verification (Default is False)? ");
+                    SSLConfS = Console.ReadLine();
+                }
                 if (!string.IsNullOrWhiteSpace(SSLConfS) && (SSLConfS.Equals("y", StringComparison.OrdinalIgnoreCase) || SSLConfS.Equals("yes", StringComparison.OrdinalIgnoreCase) || SSLConfS.Equals("true", StringComparison.OrdinalIgnoreCase)))
                 {
                     ssl = true;
                 }
 
-                Console.Write("\nSSL Protocol: ");
-                string? SSLp = Console.ReadLine();
+                // SSL PROTOCOL
+                string? SSLp;
+                if (args.Length > 10)
+                {
+                    SSLp = args[10];
+                    Console.WriteLine($"\nSSL Protocol: {SSLp}");
+                }
+                else
+                {
+                    Console.Write("\nSSL Protocol: ");
+                    SSLp = Console.ReadLine();
+                }
                 if (!string.IsNullOrWhiteSpace(SSLp))
                 {
                     if (SSLp.Equals("n", StringComparison.OrdinalIgnoreCase) || SSLp.Equals("no", StringComparison.OrdinalIgnoreCase) || SSLp.Equals("none", StringComparison.OrdinalIgnoreCase))
@@ -200,8 +310,18 @@ namespace RequestFaker
                     }
                 }
 
-                Console.Write("\nDecompression Method: ");
-                string? decP = Console.ReadLine();
+                // DECOMPRESSION METHOD
+                string? decP;
+                if (args.Length > 11)
+                {
+                    decP = args[11];
+                    Console.WriteLine($"\nDecompression Method: {decP}");
+                }
+                else
+                {
+                    Console.Write("\nDecompression Method: ");
+                    decP = Console.ReadLine();
+                }
                 if (!string.IsNullOrWhiteSpace(decP))
                 {
                     if (decP.Equals("a", StringComparison.OrdinalIgnoreCase) || decP.Equals("all", StringComparison.OrdinalIgnoreCase) || decP.Equals("everything", StringComparison.OrdinalIgnoreCase))
@@ -251,8 +371,15 @@ namespace RequestFaker
                     }
                     Console.Write("\nBody:\n" + response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
                 }
-
-                Console.ReadKey();
+                if (args.Length > 0)
+                {
+                    Console.WriteLine(Environment.NewLine);
+                    break;
+                }
+                else
+                {
+                    Console.ReadKey();
+                }
             }
         }
 
